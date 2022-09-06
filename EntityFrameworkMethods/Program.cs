@@ -9,3 +9,5 @@ Person person = new();
 
 await context.AddAsync(person);
 context.SaveChangesAsync();
+
+Console.WriteLine("Merhaba");
