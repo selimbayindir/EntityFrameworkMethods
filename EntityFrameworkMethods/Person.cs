@@ -13,9 +13,8 @@ namespace EntityFrameworkMethods
 
         }
 
-        public Person(int ıd, string name, string lastName)
+        public Person( string name, string lastName)
         {
-            Id = ıd;
             Name = name;
             LastName = lastName;
         }
