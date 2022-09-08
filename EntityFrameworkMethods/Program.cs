@@ -89,9 +89,7 @@ static async Task EntityState(NortwindContext context)
     Console.WriteLine(context.Entry(person).State);
 }
 
-
 //await Remove(context);
-
 static async Task Remove(NortwindContext context)
 {
     var deletepeople = await context.People.FirstOrDefaultAsync(p => p.Id == 14);
@@ -101,7 +99,6 @@ static async Task Remove(NortwindContext context)
 }
 
 //await RemoveRange(context);
-
 static async Task RemoveRange(NortwindContext context)
 {
     List<Person> peopleList = await context.People.Where(p => p.Id >= 1 && p.Id <= 26).ToListAsync();
@@ -109,7 +106,6 @@ static async Task RemoveRange(NortwindContext context)
     await context.SaveChangesAsync();
     Console.WriteLine("Success");
 }
-
 //SqlRaw(context);
 static void SqlRaw(NortwindContext context)
 {
@@ -123,7 +119,6 @@ static void SqlRaw(NortwindContext context)
 }
 
 //FromSqlDeferedExecution(context);
-
 static void FromSqlDeferedExecution(NortwindContext context)
 {
     int urunid = 3;
@@ -143,10 +138,55 @@ static void FromSqlDeferedExecution(NortwindContext context)
 ///IQUERYABLE :Sorgu ya Karşılık Gelir :Ef Core üzerinden yapılmış sorgunun Execute edilmemiş halini ifade eder.
 ///IEnumarable:Sorgunun Çalııştırılıp/Exercute edilmiş Verilerin InMemorye yüklenmiş halini ifade eder.
 
-var EfContains =from item in context.People
-                where item.Name.Contains("Selim")
-                select item;
-EfContains.ForEachAsync(p =>
+//ContainsMethod(context);
+static void ContainsMethod(NortwindContext context)
 {
-    Console.WriteLine("Personel Id {0} Personel Adı :{1} Personel Soyadi :{2}" + p.Id + p.Name);
-});
+    var EfContains = from person in context.People
+                     where person.Name.Contains("Selim")
+                     select person;
+    foreach (var item in EfContains)
+    {
+
+        Console.WriteLine("Personel Id {0} Personel Adı :{1} Personel Soyadi :{2}", item.Id, item.Name, item.LastName);
+
+    }
+}
+
+//WherMethod(context);
+static void WherMethod(NortwindContext context)
+{
+    var person = from per in context.People
+                 where per.Id > 5 && per.Name.EndsWith("m")
+                 select per;
+    foreach (var item in person)
+    {
+        Console.WriteLine(item.Name + " " + item.LastName);
+    }
+}
+
+//OrderByMethod(context);
+
+static void OrderByMethod(NortwindContext context)
+{
+    var orderbyfunc = context.People.OrderBy(p => p.Name).ToList();///OrderByDescending
+    orderbyfunc.ForEach(p =>
+    {
+        Console.WriteLine(p.Name);
+    });
+}
+
+//orderbyQurable(context);
+
+static void orderbyQurable(NortwindContext context)
+{
+    var orderbyquarable = from p in context.People
+                          where p.Id > 5
+                          orderby p.Id
+                          select p;
+    foreach (var item in orderbyquarable)
+    {
+        Console.WriteLine(item.Id + " " + item.Name + " " + item.LastName);
+    }
+}
+
+///Then By
