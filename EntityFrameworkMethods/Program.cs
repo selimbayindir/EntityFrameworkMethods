@@ -190,3 +190,160 @@ static void orderbyQurable(NortwindContext context)
 }
 
 ///Then By
+///Order By üzerinden yapılan sıralama işlemini birden fazla kolonda sağlar
+
+//OrderByThenBy(context);
+static void OrderByThenBy(NortwindContext context)
+{
+    var orderbyquarable = context.People
+        .OrderBy(p => p.Name)
+        .ThenBy(p => p.Id)
+        .ToList();
+    foreach (var item in orderbyquarable)
+    {
+        Console.WriteLine(item.Id + " " + item.Name);
+    }
+}
+
+//OrderByDescending
+//ThenByDescending
+
+///Tekil Veri Getiren Sorgular
+///SingleAsync
+///Eğer Sorgu Sonucunda Birden Fazla Geliorsa exception fırlatır
+//await SingleAsync(context);
+static async Task SingleAsync(NortwindContext context)
+{
+    var p = await context.People.SingleAsync(u => u.Id == 2); ///>=
+    Console.WriteLine(p.Name);
+}
+
+//SingleOrDefault
+///Eğer Sorgu Sonucunda Birden Fazla Geliyorsa exception fırlatır hiç veri gelmez ise Null Değer Fırlatır.
+
+//await SingleOrDefault(context);
+static async Task SingleOrDefault(NortwindContext context)
+{
+    var p = await context.People.SingleOrDefaultAsync(u => u.Id >= 9); ///>=
+    Console.WriteLine(p.Name);
+}
+
+///FirstAsync
+///Sorgu Sonucunda Elde edilen Verilerden İlki gelir Eğer veri gelmiyorsa Hata Fırlatır..
+//await FirstAsync(context);
+static async Task FirstAsync(NortwindContext context)
+{
+    var p = await context.People.FirstAsync(u => u.Id == 8);
+    Console.WriteLine(p.Name + " " + p.LastName);
+}
+//////////
+///
+//FirstOrDefault
+///Sorgu Sonucunda Elde edilen Verilerden İlki gelir Eğer veri gelmiyorsa Null döner..
+//await FirstOrDefault(context);
+static async Task FirstOrDefault(NortwindContext context)
+{
+    var p = context.People.FirstOrDefault(u => u.Id == 5);
+    Console.WriteLine(p.Name);
+}
+
+
+///FindAsync
+///Urunun Benzersiz Olan Kolonunu çağırıyoruz. Primary Key Kolonuna hızlı bir şekilde sorgulama yapmayı sağlar.
+
+//await FindAsync(context);
+
+static async Task FindAsync(NortwindContext context)
+{
+    var p = await context.People.FindAsync(5);
+    Console.WriteLine(p.Name+" "+p.LastName);
+}
+
+
+///Composite Primary Key Durumu
+
+///LastAsync
+///Order By Kullanılmalı 
+
+//await LastAsync(context);
+///Şartı sağlayaan en son değer gelir hic veri gelmiyorsa Exception Fırlatır.
+static async Task LastAsync(NortwindContext context)
+{
+    var p = await context.People.OrderBy(u => u.Name).LastAsync(u => u.Id > 5);
+    Console.WriteLine(p.Name);
+}
+///LastOrDefault
+//await lastOrDefault(context);
+static async Task lastOrDefault(NortwindContext context)
+{
+    //Şartı sağlayaan en son değer gelir hic veri gelmiyorsa Null Fırlatır.
+
+    var p = await context.People.OrderBy(u => u.Name).LastAsync(u => u.Id > 5);
+    Console.WriteLine(p.Name);
+}
+
+///CountAsync
+//await CountAsync(context);
+static async Task CountAsync(NortwindContext context)
+{
+    var p = (await context.People.ToListAsync()).Count();
+    var p2 = await context.People.CountAsync(); ///integer döner
+    Console.WriteLine(p);
+    Console.WriteLine(p2);
+}
+
+///LongCountAsync
+///Oluşturulan Sorgunun Sonucunda  execute edilmesi neticesinde kaç ,adet astırım elde edileceğini sayısal olarak (long) bizlere bildiren türdür..
+//await LongCountAsync(context);
+static async Task LongCountAsync(NortwindContext context)
+{
+    var p = await context.People.LongCountAsync();
+    Console.WriteLine(p);
+}
+
+///AnyAsync 
+///Sorgulanan veri geliyor mu bool turunde vAR MI Yok mu    
+//await AnyAsync(context);
+static async Task AnyAsync(NortwindContext context)
+{
+    var p = await context.People.AnyAsync(p => p.Id == 14);  //fundemental
+    var p2 = await context.People.Where(u => u.Name.Contains("a")).AnyAsync(); //where kullanabilirsin
+    var p3 = await context.People.AnyAsync(u => u.Name.Contains("a"));//Any nin içerisinde de yazabilirsin 
+    Console.WriteLine(p + " " + p2 + " " + p3);
+}
+///MaxAsync
+///Oluşturulan Sorguda verileN kOLONDA EN YÜKSEK DEĞER
+//await MaxAsync(context);
+static async Task MaxAsync(NortwindContext context)
+{
+    var personNumber = await context.People.MaxAsync(p => p.Id);
+    var personEntity =  context.People.SingleOrDefault(u => u.Id == personNumber);
+    Console.WriteLine(personNumber + " "+ personEntity.Name+" "+ personEntity.LastName);
+
+}
+///MinAsync
+//await MinAsync(context);
+static async Task MinAsync(NortwindContext context)
+{
+    var p = await context.People.MinAsync(p => p.Id);
+    Console.WriteLine(p);
+}
+///Distinct
+///Sorguda tekrar eden kayıtlar varsa tekil kayıt getirir
+
+await Distinct(context); //!!
+static async Task Distinct(NortwindContext context)
+{
+    var p = await context.People.Distinct().ToListAsync();
+    p.ForEach(x=>
+    {
+        Console.WriteLine(x.Name);
+    }
+    );
+}
+
+///AllAsync
+///Bir Sorgu neticesinde gelen verilerin,verilen şarta uyup uymadığını kontrol eder. true,false döner
+//var p = context.People.AllAsync(p => p.Id > 10);
+//Console.WriteLine(p.name);
+dominatrix

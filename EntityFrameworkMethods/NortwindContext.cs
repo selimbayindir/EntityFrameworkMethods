@@ -12,9 +12,9 @@ namespace EntityFrameworkMethods
  
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // MyPc(optionsBuilder);
+             MyPc(optionsBuilder);
 
-            WorkPc(optionsBuilder);
+            //WorkPc(optionsBuilder);
         }
 
 
