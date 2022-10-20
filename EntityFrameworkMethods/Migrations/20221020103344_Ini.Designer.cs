@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkMethods.Migrations
 {
     [DbContext(typeof(NortwindContext))]
-    [Migration("20220910092802_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221020103344_Ini")]
+    partial class Ini
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -256,7 +256,7 @@ static async Task FirstOrDefault(NortwindContext context)
 static async Task FindAsync(NortwindContext context)
 {
     var p = await context.People.FindAsync(5);
-    Console.WriteLine(p.Name+" "+p.LastName);
+    Console.WriteLine(p.Name + " " + p.LastName);
 }
 
 
@@ -317,8 +317,8 @@ static async Task AnyAsync(NortwindContext context)
 static async Task MaxAsync(NortwindContext context)
 {
     var personNumber = await context.People.MaxAsync(p => p.Id);
-    var personEntity =  context.People.SingleOrDefault(u => u.Id == personNumber);
-    Console.WriteLine(personNumber + " "+ personEntity.Name+" "+ personEntity.LastName);
+    var personEntity = context.People.SingleOrDefault(u => u.Id == personNumber);
+    Console.WriteLine(personNumber + " " + personEntity.Name + " " + personEntity.LastName);
 
 }
 ///MinAsync
@@ -331,11 +331,11 @@ static async Task MinAsync(NortwindContext context)
 ///Distinct
 ///Sorguda tekrar eden kayıtlar varsa tekil kayıt getirir
 
-await Distinct(context); //!!
+//await Distinct(context); //!!
 static async Task Distinct(NortwindContext context)
 {
     var p = await context.People.Distinct().ToListAsync();
-    p.ForEach(x=>
+    p.ForEach(x =>
     {
         Console.WriteLine(x.Name);
     }
@@ -344,6 +344,65 @@ static async Task Distinct(NortwindContext context)
 
 ///AllAsync
 ///Bir Sorgu neticesinde gelen verilerin,verilen şarta uyup uymadığını kontrol eder. true,false döner
-//var p = context.People.AllAsync(p => p.Id > 10);
-//Console.WriteLine(p.name);
-dominatrix
+//await AllAsync(context);
+
+
+static async Task AllAsync(NortwindContext context)
+{
+    var person = await context.People.AllAsync(p => p.Id > 10);
+    var person2 = await context.People.AllAsync(u => u.Name.Contains("a"));
+
+    Console.WriteLine(person);
+}
+
+//Sum Fonksiyonu  :Toplam
+///await SumAsync(context);
+
+static async Task SumAsync(NortwindContext context)
+{
+    var fiyatToplam = await context.People.SumAsync(u => u.Id);
+    Console.WriteLine(fiyatToplam);
+}
+///AverageAsync:Aritmetik Ortalama 
+///await AverageAsync(context);
+static async Task AverageAsync(NortwindContext context)
+{
+    var fiyatToplam = await context.People.AverageAsync(u => u.Id);
+    Console.WriteLine(fiyatToplam);
+}
+//Contains
+
+//await Contains(context);
+
+static async Task Contains(NortwindContext context)
+{
+    var person = await context.People.Where(p => p.Name.Contains("can")).ToListAsync();
+    person.ForEach(p =>
+    {
+        Console.WriteLine(p.Name);
+    });
+}
+//StartsWith
+///await StartsWith(context);
+
+static async Task StartsWith(NortwindContext context)
+{
+    var person = await context.People.Where(p => p.Name.StartsWith("c")).ToListAsync();
+    person.ForEach(p =>
+    {
+        Console.WriteLine(p.Name);
+    });
+}
+
+//await EndsWith(context);
+static async Task EndsWith(NortwindContext context)
+{
+    var person = await context.People.Where(p => p.LastName.EndsWith("l")).ToListAsync();
+    person.ForEach(p =>
+    {
+        Console.WriteLine(p.Name + " " + p.LastName);
+    });
+}
+
+//----------------------------------------------------------SORGU SONUCU DONUSUM FONKSİYONLARI----------------------------------------------------------//
+
