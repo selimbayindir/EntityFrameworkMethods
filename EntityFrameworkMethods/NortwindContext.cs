@@ -12,16 +12,22 @@ namespace EntityFrameworkMethods
  
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            /// MyPc(optionsBuilder);
-
-            WorkPc(optionsBuilder);
+            DevArcMyPc(optionsBuilder);
         }
+
+        private static void DevArcMyPc(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=BYNDR\\DEVARC;Initial Catalog=EntityFrameworkTraining;User ID=sa;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        }
+
+
 
 
         private static void MyPc(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=BYNDR\\PIPLE;Initial Catalog=EntityFrameworkTraining;User ID=dw;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
+        
 
         private static void WorkPc(DbContextOptionsBuilder optionsBuilder)
         {

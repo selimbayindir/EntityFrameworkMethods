@@ -7,28 +7,28 @@ Console.WriteLine("Entity Frameworks All Methods");
 NortwindContext context = new();
 ///  AddedAsync
 //await AddedAsync(context, "Selim", "BAYINDIR");
-static async Task AddedAsync(NortwindContext context, string name, string lastname)
+static async Task AddedAsync(NortwindContext context, string name, string lastname,string city)
 {
-    Person person = new(name, lastname);
+    Person person = new(name, lastname,city);
     await context.AddAsync(person);
     context.SaveChanges();
     Console.WriteLine("Success");
 }
 ///  AddRangeAsync
-//await AddRangeAsync(context);
+await AddRangeAsync(context);
 static async Task AddRangeAsync(NortwindContext context)
 {
     List<Person> _people;
     _people = new List<Person>
 {
-    new Person("Co","Dalton"),
+    new Person("Selim","BAYINDIR","ISTANBUL"),
     ///  new Urun() { ProductName = "Fanta" },
-    new Person("Co","Dalton"),
-    new Person("Co","Dalton"),
-    new Person("Co","Dalton"),
-    new Person("Co","Dalton"),
-    new Person("Co","Dalton"),
-    new Person("Co","Dalton")
+    new Person("Gülce","BAYINDIR","ISTANBUL"),
+    new Person("Yiğit Can","İÇ","ISTANBUL"),
+    new Person("Ayşe","BIRICIK","ANKARA"),
+    new Person("AK","SUNGUR","EDİRNE"),
+    new Person("Tom","HAWK","Sivas"),
+    new Person("Tom","Vercetti","Sivas")
 };
     await context.AddRangeAsync(_people);
     context.SaveChanges();
@@ -393,8 +393,7 @@ static async Task StartsWith(NortwindContext context)
         Console.WriteLine(p.Name);
     });
 }
-
-//await EndsWith(context);
+///await EndsWith(context);
 static async Task EndsWith(NortwindContext context)
 {
     var person = await context.People.Where(p => p.LastName.EndsWith("l")).ToListAsync();
@@ -408,4 +407,62 @@ static async Task EndsWith(NortwindContext context)
 //----------------------------------------------------------SORGU SONUCU DONUSUM FONKSİYONLARI----------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------------------------------------------------//
 
+//bU fONKSİYONLAR İLE SORGU SONUCUNDA ELDE EDİLEN VERİLERİ İSTEĞİMİZ DOIĞRULTUSUNDA FARKLI TÜRLERDE GÖRÜNTELEME SAĞLATABİLİRİZ
+//ToDictionary :Pek kullanılmaz vt deki verileri dictionary şeklinde getirir
 
+//await ToDictionaryAsync(context);
+static async Task ToDictionaryAsync(NortwindContext context)
+{
+    var urunler = await context.People.ToDictionaryAsync(context => context.Id, context => context.Name);
+    Console.WriteLine(urunler);
+}
+
+/*
+ *ToList ile aynı amaca hizmet etmektedir.Yani,Oluşturulan Sorguyu execute edip neticesini alırlar.
+ *ToList      :Gelen Sorgu neticesini entity türünde bir koleksiyona(List<TEntity>) dönüştürmekteyken,
+ *ToDictionary:Gelen Sorgu neticesini Dictionary türnden bir koleksiyona dönüştürecektir.
+ */
+
+
+
+//ToArrayAsync 
+//Oluşturulan Sorguyu dizi olarak elde eder
+//ToList ile muadil amaca hizmet eder.Yani Sorguyu execute eder lakin gelen sonucu entity dizisiolarak elde eder 
+
+///await ToArrayAsync(context);
+
+static async Task ToArrayAsync(NortwindContext context)
+{
+    var urunler = await context.People.ToArrayAsync();
+    Console.WriteLine(urunler);
+}
+
+//SELECT
+//1: Select Fonksiyonu Generate edilecek Sorgunun Çekileceği Kolonlarını Ayarlamak için Kullanılır
+///await Select(context);
+static async Task Select(NortwindContext context)
+{
+    var people = await context.People
+        .Select(u => new Person
+        {
+            Name = u.Name,
+            //LastName= u.LastName,
+
+        }).ToListAsync();
+    people.ForEach(p =>
+    {
+        Console.WriteLine(p.Name + " " + p.LastName);
+    });
+}
+
+//2: Select Fonksiyonu Gelen Verileri Farklı Türlerde karşılamamızı sağlar
+//----------------------------------------------------------------------------------------------------------
+//var people = await context.People.Include(u=>u.Department)
+//    .SelectMany(u => new Person
+//    {
+//        Name = u.Name,
+//        //LastName= u.LastName,
+
+//    }).ToListAsync();
+
+//Group BY:Gruplama Yapmamızı sağlayan Fonksiyondur
