@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFrameworkMethods
+namespace EntityFrameworkMethods.Entities
 {
     public class Person
     {
@@ -12,7 +12,7 @@ namespace EntityFrameworkMethods
         {
 
         }
-        public Person( string name, string lastName, string? city)
+        public Person(string name, string lastName, string? city)
         {
             Name = name;
             LastName = lastName;
@@ -23,5 +23,9 @@ namespace EntityFrameworkMethods
         public string Name { get; set; }
         public string LastName { get; set; }
         public string? City { get; set; }
+        public Company Company { get; set; }
+        public Department Department { get; set; }
+
+
     }
 }

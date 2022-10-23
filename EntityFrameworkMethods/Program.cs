@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using EntityFrameworkMethods;
+using EntityFrameworkMethods.DataAccess;
+using EntityFrameworkMethods.Entities;
 using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Entity Frameworks All Methods");
@@ -15,7 +16,7 @@ static async Task AddedAsync(NortwindContext context, string name, string lastna
     Console.WriteLine("Success");
 }
 ///  AddRangeAsync
-await AddRangeAsync(context);
+///await AddRangeAsync(context);
 static async Task AddRangeAsync(NortwindContext context)
 {
     List<Person> _people;
