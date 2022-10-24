@@ -26,6 +26,8 @@ namespace EntityFrameworkMethods.Entities
         public Company Company { get; set; }
         public Department Department { get; set; }
 
+        public Address Address { get; set; }
+
 
     }
 }

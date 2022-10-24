@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace EntityFrameworkMethods.DataAccess
 {
-    public class NortwindContext : DbContext
+    public class EfContext : DbContext
     {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            DevArcMyPc(optionsBuilder);
+            ///DevArcMyPc(optionsBuilder);
+            WorkPc(optionsBuilder);
         }
 
         private static void DevArcMyPc(DbContextOptionsBuilder optionsBuilder)
@@ -38,6 +39,7 @@ namespace EntityFrameworkMethods.DataAccess
         public DbSet<Person> People { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Company> Companies { get; set; }
+        public DbSet<Address> Addresses { get; set; }
     }
 }
 

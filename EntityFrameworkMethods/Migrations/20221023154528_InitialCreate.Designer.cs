@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EntityFrameworkMethods.Migrations
 {
-    [DbContext(typeof(NortwindContext))]
-    [Migration("20221023125943_mig1")]
-    partial class mig1
+    [DbContext(typeof(EfContext))]
+    [Migration("20221023154528_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace EntityFrameworkMethods.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("EntityFrameworkMethods.Company", b =>
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Company", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace EntityFrameworkMethods.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("EntityFrameworkMethods.Department", b =>
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace EntityFrameworkMethods.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("EntityFrameworkMethods.Person", b =>
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,22 +97,22 @@ namespace EntityFrameworkMethods.Migrations
                     b.ToTable("People");
                 });
 
-            modelBuilder.Entity("EntityFrameworkMethods.Department", b =>
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Department", b =>
                 {
-                    b.HasOne("EntityFrameworkMethods.Company", null)
+                    b.HasOne("EntityFrameworkMethods.Entities.Company", null)
                         .WithMany("Departments")
                         .HasForeignKey("CompanyId");
                 });
 
-            modelBuilder.Entity("EntityFrameworkMethods.Person", b =>
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Person", b =>
                 {
-                    b.HasOne("EntityFrameworkMethods.Company", "Company")
+                    b.HasOne("EntityFrameworkMethods.Entities.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EntityFrameworkMethods.Department", "Department")
+                    b.HasOne("EntityFrameworkMethods.Entities.Department", "Department")
                         .WithMany("People")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -123,12 +123,12 @@ namespace EntityFrameworkMethods.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("EntityFrameworkMethods.Company", b =>
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Company", b =>
                 {
                     b.Navigation("Departments");
                 });
 
-            modelBuilder.Entity("EntityFrameworkMethods.Department", b =>
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Department", b =>
                 {
                     b.Navigation("People");
                 });

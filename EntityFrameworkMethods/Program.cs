@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Entity Frameworks All Methods");
 
-NortwindContext context = new();
+EfContext context = new();
 ///  AddedAsync
 //await AddedAsync(context, "Selim", "BAYINDIR");
-static async Task AddedAsync(NortwindContext context, string name, string lastname,string city)
+static async Task AddedAsync(EfContext context, string name, string lastname,string city)
 {
     Person person = new(name, lastname,city);
     await context.AddAsync(person);
@@ -17,7 +17,7 @@ static async Task AddedAsync(NortwindContext context, string name, string lastna
 }
 ///  AddRangeAsync
 ///await AddRangeAsync(context);
-static async Task AddRangeAsync(NortwindContext context)
+static async Task AddRangeAsync(EfContext context)
 {
     List<Person> _people;
     _people = new List<Person>
@@ -37,7 +37,7 @@ static async Task AddRangeAsync(NortwindContext context)
 }
 
 //UptateFalse(context);
-static void UptateFalse(NortwindContext context)
+static void UptateFalse(EfContext context)
 {
     Person person = context.People.FirstOrDefault(p => p.Id == 8);
     person.Name = "Yahya";
@@ -48,7 +48,7 @@ static void UptateFalse(NortwindContext context)
 //
 ///Change Tracker :Context üzerinden gelen verilerin takibinden sorumlu bir mekanizmadır.
 //UpdateMethod(context);
-static void UpdateMethod(NortwindContext context)
+static void UpdateMethod(EfContext context)
 {
     Person person = new();
     person.Id = 10;
@@ -63,7 +63,7 @@ static void UpdateMethod(NortwindContext context)
 //EntityState
 
 //await ToListAsync(context);
-static async Task ToListAsync(NortwindContext context)
+static async Task ToListAsync(EfContext context)
 {
     Person person = new();
     var personList = await context.People.ToListAsync();
@@ -79,7 +79,7 @@ static async Task ToListAsync(NortwindContext context)
 }
 
 //await EntityState(context);
-static async Task EntityState(NortwindContext context)
+static async Task EntityState(EfContext context)
 {
     Person person = new();
     Console.WriteLine(context.Entry(person).State);
@@ -91,7 +91,7 @@ static async Task EntityState(NortwindContext context)
 }
 
 //await Remove(context);
-static async Task Remove(NortwindContext context)
+static async Task Remove(EfContext context)
 {
     var deletepeople = await context.People.FirstOrDefaultAsync(p => p.Id == 14);
     Console.WriteLine(deletepeople.Name + " " + deletepeople.LastName + " Silindi ..");
@@ -100,7 +100,7 @@ static async Task Remove(NortwindContext context)
 }
 
 //await RemoveRange(context);
-static async Task RemoveRange(NortwindContext context)
+static async Task RemoveRange(EfContext context)
 {
     List<Person> peopleList = await context.People.Where(p => p.Id >= 1 && p.Id <= 26).ToListAsync();
     context.RemoveRange(peopleList);
@@ -108,7 +108,7 @@ static async Task RemoveRange(NortwindContext context)
     Console.WriteLine("Success");
 }
 //SqlRaw(context);
-static void SqlRaw(NortwindContext context)
+static void SqlRaw(EfContext context)
 {
     var person = context.People
           .FromSqlRaw("SELECT * FROM People WHERE Name='Selim'")
@@ -120,7 +120,7 @@ static void SqlRaw(NortwindContext context)
 }
 
 //FromSqlDeferedExecution(context);
-static void FromSqlDeferedExecution(NortwindContext context)
+static void FromSqlDeferedExecution(EfContext context)
 {
     int urunid = 3;
 
@@ -140,7 +140,7 @@ static void FromSqlDeferedExecution(NortwindContext context)
 ///IEnumarable:Sorgunun Çalııştırılıp/Exercute edilmiş Verilerin InMemorye yüklenmiş halini ifade eder.
 
 //ContainsMethod(context);
-static void ContainsMethod(NortwindContext context)
+static void ContainsMethod(EfContext context)
 {
     var EfContains = from person in context.People
                      where person.Name.Contains("Selim")
@@ -154,7 +154,7 @@ static void ContainsMethod(NortwindContext context)
 }
 
 //WherMethod(context);
-static void WherMethod(NortwindContext context)
+static void WherMethod(EfContext context)
 {
     var person = from per in context.People
                  where per.Id > 5 && per.Name.EndsWith("m")
@@ -167,7 +167,7 @@ static void WherMethod(NortwindContext context)
 
 //OrderByMethod(context);
 
-static void OrderByMethod(NortwindContext context)
+static void OrderByMethod(EfContext context)
 {
     var orderbyfunc = context.People.OrderBy(p => p.Name).ToList();///OrderByDescending
     orderbyfunc.ForEach(p =>
@@ -178,7 +178,7 @@ static void OrderByMethod(NortwindContext context)
 
 //orderbyQurable(context);
 
-static void orderbyQurable(NortwindContext context)
+static void orderbyQurable(EfContext context)
 {
     var orderbyquarable = from p in context.People
                           where p.Id > 5
@@ -194,7 +194,7 @@ static void orderbyQurable(NortwindContext context)
 ///Order By üzerinden yapılan sıralama işlemini birden fazla kolonda sağlar
 
 //OrderByThenBy(context);
-static void OrderByThenBy(NortwindContext context)
+static void OrderByThenBy(EfContext context)
 {
     var orderbyquarable = context.People
         .OrderBy(p => p.Name)
@@ -213,7 +213,7 @@ static void OrderByThenBy(NortwindContext context)
 ///SingleAsync
 ///Eğer Sorgu Sonucunda Birden Fazla Geliorsa exception fırlatır
 //await SingleAsync(context);
-static async Task SingleAsync(NortwindContext context)
+static async Task SingleAsync(EfContext context)
 {
     var p = await context.People.SingleAsync(u => u.Id == 2); ///>=
     Console.WriteLine(p.Name);
@@ -223,7 +223,7 @@ static async Task SingleAsync(NortwindContext context)
 ///Eğer Sorgu Sonucunda Birden Fazla Geliyorsa exception fırlatır hiç veri gelmez ise Null Değer Fırlatır.
 
 //await SingleOrDefault(context);
-static async Task SingleOrDefault(NortwindContext context)
+static async Task SingleOrDefault(EfContext context)
 {
     var p = await context.People.SingleOrDefaultAsync(u => u.Id >= 9); ///>=
     Console.WriteLine(p.Name);
@@ -232,7 +232,7 @@ static async Task SingleOrDefault(NortwindContext context)
 ///FirstAsync
 ///Sorgu Sonucunda Elde edilen Verilerden İlki gelir Eğer veri gelmiyorsa Hata Fırlatır..
 //await FirstAsync(context);
-static async Task FirstAsync(NortwindContext context)
+static async Task FirstAsync(EfContext context)
 {
     var p = await context.People.FirstAsync(u => u.Id == 8);
     Console.WriteLine(p.Name + " " + p.LastName);
@@ -242,7 +242,7 @@ static async Task FirstAsync(NortwindContext context)
 //FirstOrDefault
 ///Sorgu Sonucunda Elde edilen Verilerden İlki gelir Eğer veri gelmiyorsa Null döner..
 //await FirstOrDefault(context);
-static async Task FirstOrDefault(NortwindContext context)
+static async Task FirstOrDefault(EfContext context)
 {
     var p = context.People.FirstOrDefault(u => u.Id == 5);
     Console.WriteLine(p.Name);
@@ -254,7 +254,7 @@ static async Task FirstOrDefault(NortwindContext context)
 
 //await FindAsync(context);
 
-static async Task FindAsync(NortwindContext context)
+static async Task FindAsync(EfContext context)
 {
     var p = await context.People.FindAsync(5);
     Console.WriteLine(p.Name + " " + p.LastName);
@@ -268,14 +268,14 @@ static async Task FindAsync(NortwindContext context)
 
 //await LastAsync(context);
 ///Şartı sağlayaan en son değer gelir hic veri gelmiyorsa Exception Fırlatır.
-static async Task LastAsync(NortwindContext context)
+static async Task LastAsync(EfContext context)
 {
     var p = await context.People.OrderBy(u => u.Name).LastAsync(u => u.Id > 5);
     Console.WriteLine(p.Name);
 }
 ///LastOrDefault
 //await lastOrDefault(context);
-static async Task lastOrDefault(NortwindContext context)
+static async Task lastOrDefault(EfContext context)
 {
     //Şartı sağlayaan en son değer gelir hic veri gelmiyorsa Null Fırlatır.
 
@@ -285,7 +285,7 @@ static async Task lastOrDefault(NortwindContext context)
 
 ///CountAsync
 //await CountAsync(context);
-static async Task CountAsync(NortwindContext context)
+static async Task CountAsync(EfContext context)
 {
     var p = (await context.People.ToListAsync()).Count();
     var p2 = await context.People.CountAsync(); ///integer döner
@@ -296,7 +296,7 @@ static async Task CountAsync(NortwindContext context)
 ///LongCountAsync
 ///Oluşturulan Sorgunun Sonucunda  execute edilmesi neticesinde kaç ,adet astırım elde edileceğini sayısal olarak (long) bizlere bildiren türdür..
 //await LongCountAsync(context);
-static async Task LongCountAsync(NortwindContext context)
+static async Task LongCountAsync(EfContext context)
 {
     var p = await context.People.LongCountAsync();
     Console.WriteLine(p);
@@ -305,7 +305,7 @@ static async Task LongCountAsync(NortwindContext context)
 ///AnyAsync 
 ///Sorgulanan veri geliyor mu bool turunde vAR MI Yok mu    
 //await AnyAsync(context);
-static async Task AnyAsync(NortwindContext context)
+static async Task AnyAsync(EfContext context)
 {
     var p = await context.People.AnyAsync(p => p.Id == 14);  //fundemental
     var p2 = await context.People.Where(u => u.Name.Contains("a")).AnyAsync(); //where kullanabilirsin
@@ -315,7 +315,7 @@ static async Task AnyAsync(NortwindContext context)
 ///MaxAsync
 ///Oluşturulan Sorguda verileN kOLONDA EN YÜKSEK DEĞER
 //await MaxAsync(context);
-static async Task MaxAsync(NortwindContext context)
+static async Task MaxAsync(EfContext context)
 {
     var personNumber = await context.People.MaxAsync(p => p.Id);
     var personEntity = context.People.SingleOrDefault(u => u.Id == personNumber);
@@ -324,7 +324,7 @@ static async Task MaxAsync(NortwindContext context)
 }
 ///MinAsync
 //await MinAsync(context);
-static async Task MinAsync(NortwindContext context)
+static async Task MinAsync(EfContext context)
 {
     var p = await context.People.MinAsync(p => p.Id);
     Console.WriteLine(p);
@@ -333,7 +333,7 @@ static async Task MinAsync(NortwindContext context)
 ///Sorguda tekrar eden kayıtlar varsa tekil kayıt getirir
 
 //await Distinct(context); //!!
-static async Task Distinct(NortwindContext context)
+static async Task Distinct(EfContext context)
 {
     var p = await context.People.Distinct().ToListAsync();
     p.ForEach(x =>
@@ -348,7 +348,7 @@ static async Task Distinct(NortwindContext context)
 //await AllAsync(context);
 
 
-static async Task AllAsync(NortwindContext context)
+static async Task AllAsync(EfContext context)
 {
     var person = await context.People.AllAsync(p => p.Id > 10);
     var person2 = await context.People.AllAsync(u => u.Name.Contains("a"));
@@ -359,14 +359,14 @@ static async Task AllAsync(NortwindContext context)
 //Sum Fonksiyonu  :Toplam
 ///await SumAsync(context);
 
-static async Task SumAsync(NortwindContext context)
+static async Task SumAsync(EfContext context)
 {
     var fiyatToplam = await context.People.SumAsync(u => u.Id);
     Console.WriteLine(fiyatToplam);
 }
 ///AverageAsync:Aritmetik Ortalama 
 ///await AverageAsync(context);
-static async Task AverageAsync(NortwindContext context)
+static async Task AverageAsync(EfContext context)
 {
     var fiyatToplam = await context.People.AverageAsync(u => u.Id);
     Console.WriteLine(fiyatToplam);
@@ -375,7 +375,7 @@ static async Task AverageAsync(NortwindContext context)
 
 //await Contains(context);
 
-static async Task Contains(NortwindContext context)
+static async Task Contains(EfContext context)
 {
     var person = await context.People.Where(p => p.Name.Contains("can")).ToListAsync();
     person.ForEach(p =>
@@ -386,7 +386,7 @@ static async Task Contains(NortwindContext context)
 //StartsWith
 ///await StartsWith(context);
 
-static async Task StartsWith(NortwindContext context)
+static async Task StartsWith(EfContext context)
 {
     var person = await context.People.Where(p => p.Name.StartsWith("c")).ToListAsync();
     person.ForEach(p =>
@@ -395,7 +395,7 @@ static async Task StartsWith(NortwindContext context)
     });
 }
 ///await EndsWith(context);
-static async Task EndsWith(NortwindContext context)
+static async Task EndsWith(EfContext context)
 {
     var person = await context.People.Where(p => p.LastName.EndsWith("l")).ToListAsync();
     person.ForEach(p =>
@@ -412,7 +412,7 @@ static async Task EndsWith(NortwindContext context)
 //ToDictionary :Pek kullanılmaz vt deki verileri dictionary şeklinde getirir
 
 //await ToDictionaryAsync(context);
-static async Task ToDictionaryAsync(NortwindContext context)
+static async Task ToDictionaryAsync(EfContext context)
 {
     var urunler = await context.People.ToDictionaryAsync(context => context.Id, context => context.Name);
     Console.WriteLine(urunler);
@@ -432,7 +432,7 @@ static async Task ToDictionaryAsync(NortwindContext context)
 
 ///await ToArrayAsync(context);
 
-static async Task ToArrayAsync(NortwindContext context)
+static async Task ToArrayAsync(EfContext context)
 {
     var urunler = await context.People.ToArrayAsync();
     Console.WriteLine(urunler);
@@ -441,7 +441,7 @@ static async Task ToArrayAsync(NortwindContext context)
 //SELECT
 //1: Select Fonksiyonu Generate edilecek Sorgunun Çekileceği Kolonlarını Ayarlamak için Kullanılır
 ///await Select(context);
-static async Task Select(NortwindContext context)
+static async Task Select(EfContext context)
 {
     var people = await context.People
         .Select(u => new Person
@@ -457,7 +457,7 @@ static async Task Select(NortwindContext context)
 }
 
 //2: Select Fonksiyonu Gelen Verileri Farklı Türlerde karşılamamızı sağlar
-//----------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------ac b adcjkszjvkğpdsövçkn<srıvxcö h vı
 //var people = await context.People.Include(u=>u.Department)
 //    .SelectMany(u => new Person
 //    {
@@ -467,3 +467,15 @@ static async Task Select(NortwindContext context)
 //    }).ToListAsync();
 
 //Group BY:Gruplama Yapmamızı sağlayan Fonksiyondur
+
+
+//Default Convertion
+//Her iki entity de Navi Property ile birbiri ile  tekil referans ederek fiziksel bir ilişki olacağı tarif dilir
+//One To One ilişki türünde,dependent entity 'nin hangisi olduğunu anlamak 
+// 2 Data Annotations
+
+///3 FluntAPI
+///HasOne  :İlgili entity nin ilişkisel entity'ye birebir yada bire çok olacak şekilde ilişkisini yapılandırmaya başlayan metottur..
+///HasMany :İlgili entity nin ilişkisel entity'ye çoka bir ya da çoka çok olacak şekilde ilişkisini yapılandırmaya başlayan metottur..
+///WitOne  :HasOne ya da HasMany den Sonra bire bir ya da çoka bir olacak şekilde ilişkisini yapılandırmaya başlayan metottur.. 
+///WitMany :HasOne ya da HasMany den Sonra bire çok ya da çoka çok olacak şekilde ilişkisini yapılandırmaya başlayan metottur.. 
