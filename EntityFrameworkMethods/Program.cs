@@ -475,12 +475,95 @@ One To One ilişki türünde,dependent entity 'nin hangisi olduğunu belrleyebil
 Bu durumda fiziksel olarak bir foreign key'e karşılık  propoerty/kolon tanımlayarak çözebiliyoruz. 
 Böylece foreign key'e karşılık property tanımlayarak lüzümsuz bir kolon oluşturmuş oluruz.
 
+One To One
+///Person
+       public int Id { get; set; }
+        
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string? City { get; set; }
+
+        public Address Address { get; set; }
+////Address
+      public int Id { get; set; }
+        public String Adres { get; set; }
+        public int PersonId { get; set; }//bunu ayırt ettirmek için yazıyoruz default Convertion
+        public Person Person { get; set; }
+One To Many :Bire çok default Convention işleminde fk tanımlama zorunluluğu yoktur
+///Person
+     public int Id { get; set; }
+        
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string? City { get; set; }
+        public Company Company { get; set; }
+        public Department Department { get; set; }
+///Department
+        public int Id { get; set; }
+        public string DepartmentName { get; set; }
+
+        public ICollection<Person> People { get; set; }
+
+Many To Many
+
 */
 
 // 2 Data Annotations
+/*
+ One To One
+///Person
+       public int Id { get; set; }
+        
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string? City { get; set; }
+
+        public Address Address { get; set; }
+////Address
+    [Key,ForeignKey(nameof(Person))] //Data ANNOTATION
+      public int Id { get; set; }
+        public String Adres { get; set; }
+        public Person Person { get; set; }
+One To Many
+
+    ///Person
+       public int Id { get; set; }
+ 
+    [ForeignKey(nameof(Department))]
+       public int DId { get; set; }
+
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string? City { get; set; }
+
+        public Address Address { get; set; }
+////Address
+    [Key,ForeignKey(nameof(Person))] //Data ANNOTATION
+      public int Id { get; set; }
+        public String Adres { get; set; }
+        public Person Person { get; set; }
+
+Many To Many
+ */
 
 ///3 FluntAPI
 ///HasOne  :İlgili entity nin ilişkisel entity'ye birebir yada bire çok olacak şekilde ilişkisini yapılandırmaya başlayan metottur..
 ///HasMany :İlgili entity nin ilişkisel entity'ye çoka bir ya da çoka çok olacak şekilde ilişkisini yapılandırmaya başlayan metottur..
 ///WitOne  :HasOne ya da HasMany den Sonra bire bir ya da çoka bir olacak şekilde ilişkisini yapılandırmaya başlayan metottur.. 
 ///WitMany :HasOne ya da HasMany den Sonra bire çok ya da çoka çok olacak şekilde ilişkisini yapılandırmaya başlayan metottur.. 
+/*
+ * One To One 
+Context nesnesi içerisine oluşturulan model builder içerisinde bu işlemler yürütülür
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Address>().HasKey(c => c.Id);
+            modelBuilder.Entity<Person>().HasOne(c => c.Address).WithOne(c => c.Person).HasForeignKey<Address>(c => c.Id); //birebir 
+        }
+
+
+*/
+/*
+ * One To Many
+
+ 
+ */

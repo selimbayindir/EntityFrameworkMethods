@@ -21,11 +21,16 @@ namespace EntityFrameworkMethods.DataAccess
         {
             modelBuilder.Entity<Address>().HasKey(c => c.Id);
             modelBuilder.Entity<Person>().HasOne(c => c.Address).WithOne(c => c.Person).HasForeignKey<Address>(c => c.Id); //birebir 
+
+            modelBuilder.Entity<Person>()
+                .HasOne(c => c.Department)
+                .WithMany(d => d.People);
+                //.HasForeignKey(c => c.DId); //Department Id DEĞİLDE DId benim fk m olacak dersen budur
         }
 
         private static void DevArcMyPc(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=BYNDR\\DEVARC;Initial Catalog=EntityFrameworkTraining;User ID=sa;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer("Data Source=BYNDR\\DEVARC;Initial Catalog=EfCore;User ID=sa;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
 
@@ -33,13 +38,13 @@ namespace EntityFrameworkMethods.DataAccess
 
         private static void MyPc(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=BYNDR\\PIPLE;Initial Catalog=EntityFrameworkTraining;User ID=dw;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer("Data Source=BYNDR\\PIPLE;Initial Catalog=EfCore;User ID=dw;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
 
         private static void WorkPc(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=SELIM-BAYINDIR\\ARC;Initial Catalog=EntityFrameworkTraining;User ID=sa;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            optionsBuilder.UseSqlServer("Data Source=SELIM-BAYINDIR\\ARC;Initial Catalog=EfCore;User ID=sa;Password=Perkon123456;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
         public DbSet<Person> People { get; set; }
