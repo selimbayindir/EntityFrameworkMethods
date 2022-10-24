@@ -470,8 +470,13 @@ static async Task Select(EfContext context)
 
 
 //Default Convertion
-//Her iki entity de Navi Property ile birbiri ile  tekil referans ederek fiziksel bir ilişki olacağı tarif dilir
-//One To One ilişki türünde,dependent entity 'nin hangisi olduğunu anlamak 
+/*Her iki entity de Navi Property ile birbiri ile  tekil referans ederek fiziksel bir ilişki olacağı tarif dilir
+One To One ilişki türünde,dependent entity 'nin hangisi olduğunu belrleyebilmek pek kolay değildir.
+Bu durumda fiziksel olarak bir foreign key'e karşılık  propoerty/kolon tanımlayarak çözebiliyoruz. 
+Böylece foreign key'e karşılık property tanımlayarak lüzümsuz bir kolon oluşturmuş oluruz.
+
+*/
+
 // 2 Data Annotations
 
 ///3 FluntAPI
