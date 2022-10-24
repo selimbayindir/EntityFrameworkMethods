@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFrameworkMethods.Migrations
 {
     [DbContext(typeof(EfContext))]
-    [Migration("20221023154528_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221024195433_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,20 @@ namespace EntityFrameworkMethods.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Adres")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+                });
 
             modelBuilder.Entity("EntityFrameworkMethods.Entities.Company", b =>
                 {
@@ -97,6 +111,17 @@ namespace EntityFrameworkMethods.Migrations
                     b.ToTable("People");
                 });
 
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Address", b =>
+                {
+                    b.HasOne("EntityFrameworkMethods.Entities.Person", "Person")
+                        .WithOne("Address")
+                        .HasForeignKey("EntityFrameworkMethods.Entities.Address", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
             modelBuilder.Entity("EntityFrameworkMethods.Entities.Department", b =>
                 {
                     b.HasOne("EntityFrameworkMethods.Entities.Company", null)
@@ -131,6 +156,12 @@ namespace EntityFrameworkMethods.Migrations
             modelBuilder.Entity("EntityFrameworkMethods.Entities.Department", b =>
                 {
                     b.Navigation("People");
+                });
+
+            modelBuilder.Entity("EntityFrameworkMethods.Entities.Person", b =>
+                {
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

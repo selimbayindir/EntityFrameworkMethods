@@ -10,8 +10,9 @@ namespace EntityFrameworkMethods.Entities
     {
         public int Id { get; set; }
         public string DepartmentName { get; set; }
+
         public ICollection<Person> People { get; set; }
-        //public Company Company { get; set; }
+
 
 
     }

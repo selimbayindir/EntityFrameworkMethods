@@ -4,7 +4,7 @@
 
 namespace EntityFrameworkMethods.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class mig1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,6 +69,24 @@ namespace EntityFrameworkMethods.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Adres = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_People_Id",
+                        column: x => x.Id,
+                        principalTable: "People",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_CompanyId",
                 table: "Departments",
@@ -87,6 +105,9 @@ namespace EntityFrameworkMethods.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropTable(
                 name: "People");
 

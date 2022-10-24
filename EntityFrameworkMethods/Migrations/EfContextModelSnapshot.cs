@@ -25,22 +25,13 @@ namespace EntityFrameworkMethods.Migrations
             modelBuilder.Entity("EntityFrameworkMethods.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Adres")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId")
-                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -122,7 +113,7 @@ namespace EntityFrameworkMethods.Migrations
                 {
                     b.HasOne("EntityFrameworkMethods.Entities.Person", "Person")
                         .WithOne("Address")
-                        .HasForeignKey("EntityFrameworkMethods.Entities.Address", "PersonId")
+                        .HasForeignKey("EntityFrameworkMethods.Entities.Address", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

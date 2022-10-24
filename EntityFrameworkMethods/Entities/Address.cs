@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,10 @@ namespace EntityFrameworkMethods.Entities
 {
     public class Address
     {
+        //[Key,ForeignKey(nameof(Person))] //Data ANNOTATION
         public int Id { get; set; }
         public String Adres { get; set; }
-        public int PersonId { get; set; }//bunu ayırt ettirmek için yazıyoruz default Convertion
+        //public int PersonId { get; set; }//bunu ayırt ettirmek için yazıyoruz default Convertion
         public Person Person { get; set; }
     }
 }

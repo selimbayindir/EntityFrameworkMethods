@@ -20,6 +20,10 @@ namespace EntityFrameworkMethods.Entities
         }
 
         public int Id { get; set; }
+        /// <summary>
+        /// Data Annotation foreign key belirlenmeli
+        /// </summary>
+        
         public string Name { get; set; }
         public string LastName { get; set; }
         public string? City { get; set; }

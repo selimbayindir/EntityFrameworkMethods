@@ -1,0 +1,5 @@
+Default Convertion
+One To One
+Ýliþki yi kurduktan sonra bir fk göstermen gerekir
+One To Many
+Ýliþki yi kurduktan sonra bir fk göstermen gerekmez iliþkiyi kur deam et

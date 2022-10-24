@@ -13,8 +13,14 @@ namespace EntityFrameworkMethods.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            ///DevArcMyPc(optionsBuilder);
-            WorkPc(optionsBuilder);
+            DevArcMyPc(optionsBuilder);
+            //WorkPc(optionsBuilder);
+        }
+        //Fluent API yi burada tasarlıyoruz. Navi Propertyler yine aynı şekilde tanımladıkdan sonra burada kullanırız.
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Address>().HasKey(c => c.Id);
+            modelBuilder.Entity<Person>().HasOne(c => c.Address).WithOne(c => c.Person).HasForeignKey<Address>(c => c.Id); //birebir 
         }
 
         private static void DevArcMyPc(DbContextOptionsBuilder optionsBuilder)
