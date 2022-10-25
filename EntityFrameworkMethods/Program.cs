@@ -564,6 +564,9 @@ Context nesnesi içerisine oluşturulan model builder içerisinde bu işlemler y
 */
 /*
  * One To Many
-
+               modelBuilder.Entity<Person>()
+                .HasOne(c => c.Department)
+                .WithMany(d => d.People);
+                //.HasForeignKey(c => c.DId); //Department Id DEĞİLDE DId benim fk m olacak dersen budur
  
  */
